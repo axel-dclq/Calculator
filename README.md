@@ -22,7 +22,9 @@ The Calculator class is designed to provide a user-friendly interface for basic 
    ```bash
    git clone https://github.com/your-username/calculator-project.git
    cd calculator-project
-2. GUI will appear, allowing you to perform arithmetic operations conveniently.
+2. Run the application using Python.
+    ```python main.py
+3. GUI will appear, allowing you to perform arithmetic operations conveniently.
 
 ## Dependencies
 
