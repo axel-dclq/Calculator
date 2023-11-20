@@ -1,21 +1,20 @@
 import tkinter as tk
 
-class Calculator(tk.Tk):
-
+class Calculatrice(tk.Tk):
     def __init__(self):
-        super().__init__() # recall constructor from Tk
-        self.title('Calculator')
-        self.geometry('400x500')
-        self.config(bg="#d2e5f7") # set the background color of the calculator 
+        super().__init__()
+        self.title("Calculatrice")
+        self.geometry("400x600")
+        self.config(bg="#f2f2f2")  # Couleur de fond de la fenêtre
 
-        self.entry = tk.Entry(self, font=("Helvetica", 24), justify="right") 
+        self.entry = tk.Entry(self, font=("Helvetica", 24), justify="right")
         self.entry.grid(row=0, column=0, columnspan=4, padx=10, pady=10, ipadx=10, ipady=10)
 
-        self.add_button()
-        # self.add_result_button()
-        # self.add_C_button()
+        self.ajouter_boutons()
+        self.ajouter_bouton_resultat()
+        self.ajouter_bouton_effacer()
 
-    def add_button(self):
+    def ajouter_boutons(self):
         bouton_texts = [
             ("7", 1, 0), ("8", 1, 1), ("9", 1, 2), ("/", 1, 3),
             ("4", 2, 0), ("5", 2, 1), ("6", 2, 2), ("*", 2, 3),
@@ -24,25 +23,35 @@ class Calculator(tk.Tk):
         ]
 
         for (text, row, column) in bouton_texts:
-            bouton = tk.Button(self, text=text, font=("Helvetica", 20), command=lambda t=text: self.click_button(t))
+            bouton = tk.Button(self, text=text, font=("Helvetica", 20), command=lambda t=text: self.cliquer_bouton(t))
             bouton.grid(row=row, column=column, padx=5, pady=5, ipadx=10, ipady=10)
-    
-    # def add_result_button():
 
-    # def add_C_button():
+    def ajouter_bouton_resultat(self):
+        bouton = tk.Button(self, text="=", font=("Helvetica", 20), command=self.calculer_resultat)
+        bouton.grid(row=4, column=3, padx=5, pady=5, ipadx=10, ipady=10)
 
-    
+    def ajouter_bouton_effacer(self):
+        bouton = tk.Button(self, text="C", font=("Helvetica", 20), command=self.effacer)
+        bouton.grid(row=4, column=0, padx=5, pady=5, ipadx=10, ipady=10)
 
-    def click_button(self, button):
-        """
-        button is the value (string) contained by the clicked button
-        """
-        current_value = self.entry.get()
-        self.entry.delete(0,tk.END)
-        self.entry.insert(tk.END, current_value + button)
+    def cliquer_bouton(self, texte):
+        valeur_actuelle = self.entry.get()
+        self.entry.delete(0, tk.END)
+        self.entry.insert(tk.END, valeur_actuelle + texte)
 
+    def calculer_resultat(self):
+        expression = self.entry.get()
+        try:
+            resultat = str(eval(expression))
+            self.entry.delete(0, tk.END)
+            self.entry.insert(tk.END, resultat)
+        except Exception as e:
+            self.entry.delete(0, tk.END)
+            self.entry.insert(tk.END, "Erreur")
 
+    def effacer(self):
+        self.entry.delete(0, tk.END)
 
-if __name__ == '__main__':
-    app = Calculator()
+if __name__ == "__main__":
+    app = Calculatrice()
     app.mainloop()
